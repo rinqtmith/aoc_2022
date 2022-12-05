@@ -44,8 +44,8 @@ def calculatePoints(arr: List[str]) -> int:
 # return type should be changed according to problem
 def findSolution(arg: str) -> Tuple[int, int]:
     data = getInputs(arg)
-    data1 = [x[: int(len(x) / 2)] for x in data if x != "\n"]
-    data2 = [x[int(len(x) / 2) : len(x)] for x in data if x != "\n"]  # noqa
+    data1 = [x[: int(len(x) / 2)] for x in data]
+    data2 = [x[int(len(x) / 2) : len(x)] for x in data]  # noqa
 
     result: List[str] = []
 
@@ -54,7 +54,14 @@ def findSolution(arg: str) -> Tuple[int, int]:
         if temp:
             result.append(temp[0])
 
-    return (calculatePoints(result), 1)
+    result2: List[str] = []
+
+    for ind in range(0, len(data), 3):
+        temp = list(set(data[ind]) & set(data[ind + 1]) & set(data[ind + 2]))
+        if temp:
+            result2.append(temp[0])
+
+    return (calculatePoints(result), calculatePoints(result2))
 
 
 def main() -> None:
