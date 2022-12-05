@@ -1,5 +1,6 @@
 import os
 import sys
+import string
 from typing import List, Tuple
 
 # Get inputs from files
@@ -26,12 +27,34 @@ def getInputs(arg: str) -> List[str]:
     return [x[:-1] for x in data]
 
 
+def calculatePoints(arr: List[str]) -> int:
+    total = 0
+    lower = string.ascii_lowercase
+    upper = string.ascii_uppercase
+
+    for x in arr:
+        if x in lower:
+            total += lower.index(x) + 1
+        if x in upper:
+            total += upper.index(x) + 27
+
+    return total
+
+
 # return type should be changed according to problem
 def findSolution(arg: str) -> Tuple[int, int]:
     data = getInputs(arg)
-    data = [x for x in data if x != "\n"]
+    data1 = [x[: int(len(x) / 2)] for x in data if x != "\n"]
+    data2 = [x[int(len(x) / 2) : len(x)] for x in data if x != "\n"]  # noqa
 
-    return (1, 1)
+    result: List[str] = []
+
+    for ind, val in enumerate(data1):
+        temp = list(set(val) & set(data2[ind]))
+        if temp:
+            result.append(temp[0])
+
+    return (calculatePoints(result), 1)
 
 
 def main() -> None:
