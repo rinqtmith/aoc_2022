@@ -32,6 +32,7 @@ def findSolution(arg: str) -> Tuple[int, int]:
     newData: List[List[str]] = [x.split(sep=",") for x in data]
 
     result = 0
+    result2 = 0
 
     for pair in newData:
         first = set(
@@ -43,8 +44,10 @@ def findSolution(arg: str) -> Tuple[int, int]:
         inter = first & second
         if list(inter) == list(first) or list(inter) == list(second):
             result += 1
+        if inter:
+            result2 += 1
 
-    return (result, 999)
+    return (result, result2)
 
 
 def main() -> None:
